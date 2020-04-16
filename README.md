@@ -9,10 +9,10 @@ Tranquility Base is open-source software for :
 * Building out a Datacenter infrastructure
 * Deploying pre-approved reference application architectures as IaC into cloud environments.
 
-For more details, check the [wiki]( https://github.com/tranquilitybase-io/TranquilityBase/wiki)
+Click [here](https://github.com/tranquilitybase-io/TranquilityBase/wiki) to see more details about Tranquility Base on the wiki.
 
 ## Installation
-Click [here](https://github.com/tranquilitybase-io/TranquilityBase/wiki/How-to-get-started...) to see the installation/getting started instructions.
+Click [here](https://github.com/tranquilitybase-io/TranquilityBase/wiki/How-to-get-started...) to see the installation/getting started instructions on the wiki.
 <!-- Should we add a gif to make it easier? -->
 
 
@@ -21,6 +21,7 @@ Click [here](https://github.com/tranquilitybase-io/TranquilityBase/wiki/How-to-g
 
 ## Contributing
 <!-- explain to developers how to contribue work. See github guidelines https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors -->  
+Click [here](https://github.com/tranquilitybase-io/TranquilityBase/wiki/Contribution-Guidelines) to see the contribution guidelines on the wiki.
 
 ## Credits
 <!-- Include a section for credits in order to highlight and link to the authors of your project. -->
