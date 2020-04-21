@@ -1,4 +1,4 @@
-#/bin/bash
+#/bin/bash -x
 # parameters: 
 # 1: repo
 # 2: existing tag
@@ -22,7 +22,8 @@ mkdir -p deployment_workspace
 cd deployment_workspace
 rm -fr "${repo}"
 
-if [[ "$(git ls-remote https://github.com/tranquilitybase-io/${repo} | wc -l)" -le 2 ]]; then
+if [[ ! $(git ls-remote "https://github.com/tranquilitybase-io/${repo}") ]]; then
+  echo "exit..."
   exit 0
 fi
 
@@ -33,5 +34,7 @@ git tag -a "${new_tag}" -m "Tagged by create_git_tag.sh script"
 git push --set-upstream origin "${new_tag}"
 git merge master 
 git checkout master
-git branch --delete "${new_tag}"
+if [[ ! $(git rev-parse --verify "${new_tag}") ]]; then
+  git branch --delete "${new_tag}"
+fi
 cd --
