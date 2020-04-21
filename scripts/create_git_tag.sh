@@ -4,9 +4,21 @@
 # 2: existing tag
 # 3: new tag
 
+clean_branch () {
+	remote_name=$1
+	branch_name=$2
+	git push -d $remote_name $branch_name
+	git branch -d $branch_name
+}
+
 repo=${1}
 existing_tag=${2}
 new_tag=${3}
+
+if [[ -d workspace ]]; then
+	rm -r workspace 
+fi
+
 mkdir -p workspace
 cd workspace
 git clone https://github.com/tranquilitybase-io/${repo}

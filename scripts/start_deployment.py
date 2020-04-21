@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-# pre-requisites
+# pre-requisites: docker should be initialized with the Google Container registry.
+# This script is re-runnable, if you get any docker errors and there are tags missing, you can rerun the script.
+# Ensure the script runs in the root folder of the TranquilityBase-io repo.
+# Run script, to see what docker commands will be run:
+# scripts/start_deployment.py -f config/deployment.ini -b feature/houston-91 
+# When you want to commit the changes, add --commit to the command and run:
+#scripts/start_deployment.py -f config/deployment.ini -b feature/houston-91 --commit
 
 import os
 import sys
@@ -31,6 +37,10 @@ def apply_new_tag(tag, next_version, commit=False):
         print(push_cmd)
         if commit:
             os.system(push_cmd)
+        git_cmd = f"create_git_tag.sh {repo} {tag}{sv}"
+        print(git_cmd)
+        if commit:
+            os.system(git_cmd)
         print("")
 
 def purge_image_with_tag(tag):
@@ -49,7 +59,7 @@ print(f"commit: {args.commit}")
 
 sv = Semver()
 nver = sv.get_next_version_from_branch(args.branch_name)
-next_ver = f"-v{sv.as_string()}"
+next_ver = f"{sv.as_string()}"
 
 config = configparser.ConfigParser()
 config.read(args.filename)
