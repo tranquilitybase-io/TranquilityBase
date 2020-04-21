@@ -3,6 +3,9 @@
 # 1: repo
 # 2: existing tag
 # 3: new tag
+#
+# Delete a remote tag
+# git push --delete origin v0.0.1
 
 clean_branch () {
 	remote_name=$1
@@ -15,12 +18,9 @@ repo=${1}
 existing_tag=${2}
 new_tag=${3}
 
-if [[ -d workspace ]]; then
-	rm -r workspace 
-fi
-
-mkdir -p workspace
-cd workspace
+mkdir -p deployment_workspace 
+cd deployment_workspace
+rm -fr tranquilitybase-io
 git clone https://github.com/tranquilitybase-io/${repo}
 cd ${repo}
 git checkout -b ${existing_tag}
@@ -29,4 +29,3 @@ git push --set-upstream origin "${new_tag}"
 git merge master 
 git checkout master
 cd --
-rm -r workspace
