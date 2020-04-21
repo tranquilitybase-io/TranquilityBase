@@ -28,4 +28,5 @@ git tag -a "${new_tag}" -m "Tagged by create_git_tag.sh script"
 git push --set-upstream origin "${new_tag}"
 git merge master 
 git checkout master
+git branch --delete "${new_tag}"
 cd --

@@ -37,7 +37,7 @@ def apply_new_tag(tag, next_version, commit=False):
         print(push_cmd)
         if commit:
             os.system(push_cmd)
-        git_cmd = f"create_git_tag.sh {repo} {tag}{sv}"
+        git_cmd = f"scripts/create_git_tag.sh {repo} {tag}{sv}"
         print(git_cmd)
         if commit:
             os.system(git_cmd)
