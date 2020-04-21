@@ -20,7 +20,12 @@ new_tag=${3}
 
 mkdir -p deployment_workspace 
 cd deployment_workspace
-rm -fr tranquilitybase-io
+rm -fr "${repo}"
+
+if [[ "$(git ls-remote https://github.com/tranquilitybase-io/${repo} | wc -l)" -le 2 ]]; then
+  exit 0
+fi
+
 git clone https://github.com/tranquilitybase-io/${repo}
 cd ${repo}
 git checkout -b ${existing_tag}
