@@ -21,7 +21,7 @@ class Semver():
             with open(self.filename, "r") as fh:
                 self.version = json.load(fh)
         except FileNotFoundError:
-            self.version = json.loads(default_version_data)
+            self.version = json.loads(self.default_version_data)
         except IOError:
             print("IO error, don't know how to deal with this!")
             exit(1)
