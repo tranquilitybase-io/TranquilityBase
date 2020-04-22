@@ -30,6 +30,7 @@ fi
 git clone https://github.com/tranquilitybase-io/${repo}
 cd ${repo}
 git checkout -b ${existing_tag}
+git pull
 git tag -a "${new_tag}" -m "Tagged by create_git_tag.sh script"
 git push --set-upstream origin "${new_tag}"
 git merge master 
