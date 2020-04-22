@@ -31,16 +31,20 @@ git clone https://github.com/tranquilitybase-io/${repo}
 cd ${repo}
 git fetch
 git checkout ${existing_tag}
+git checkout -b temp
 # remove the "new tag" if it already exists, to allow the script to be rerunable
-if [[ ! $(git rev-parse --verify "${new_tag}") ]]; then
-  git branch --delete "${new_tag}"
+git tag --list
+if [[ ! $(git tag --list | egrep -q "^{new_tag} >/dev/null 2>&1") ]]; then
+  echo "Tag ${new_tag} found, deleting..."
+  git tag -d "${new_tag}"
+  git push --tag origin  :"${new_tag}"
 fi
+echo "${repo}"
+cat version.json
 # Now create the new tag
 git tag -a "${new_tag}" -m "Tagged by create_git_tag.sh script"
-git push --set-upstream origin "${new_tag}"
-git merge master 
+git merge temp
+# checkout master so that we can delete the temp branch
 git checkout master
-if [[ ! $(git rev-parse --verify "${new_tag}") ]]; then
-  git branch --delete "${new_tag}"
-fi
+git branch --delete temp
 cd --
