@@ -24,9 +24,6 @@ for b in "${branch[@]}"; do
     fi
 done
 
-# KT - Allow override pre_release
-pre_release=${PRE_RELEASE:-false}
-
 echo "pre_release = $pre_release"
 
 # fetch tags
