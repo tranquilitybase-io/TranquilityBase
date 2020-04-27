@@ -12,6 +12,8 @@ dryrun=${DRY_RUN:-false}
 tag_prefix=${TAG_PREFIX:-internal-}
 branch=${GITHUB_REF#'refs/heads/'}
 
+env 
+
 if [ -z ${DEFAULT_BUMP} ]; then 
   # default bump based on branch name
   default_semvar_bump=patch
