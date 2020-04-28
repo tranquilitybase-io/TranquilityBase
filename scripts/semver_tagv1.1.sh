@@ -21,17 +21,6 @@ if [[ "$(git show -n1 --merges --oneline | grep -c '/feature/')" -ge 1 ]]; then
 fi
 echo "default_semvar_bump: ${default_semvar_bump}"
 
-
-if [ -z ${DEFAULT_BUMP} ]; then 
-  # default bump based on branch name
-  default_semvar_bump=patch
-  [[ $branch =~ ^feature/.*$ ]] && default_semvar_bump='minor'
-else
-  # or a simple default
-  default_semvar_bump=${DEFAULT_BUMP:-minor}
-fi
-
-
 pre_release="true"
 IFS=',' read -ra branch <<< "$release_branches"
 for b in "${branch[@]}"; do
