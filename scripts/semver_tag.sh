@@ -1,18 +1,26 @@
 #!/bin/bash -x 
 
 # config
-default_semvar_bump=${DEFAULT_BUMP:-minor}
 with_v=${WITH_V:-false}
 release_branches=${RELEASE_BRANCHES:-master}
 custom_tag=${CUSTOM_TAG}
 source=${SOURCE:-.}
 dryrun=${DRY_RUN:-false}
+default_semvar_bump=${DEFAULT_DUMP:-patch}
 
 
 # KT - add tag_prefix
-tag_prefix=${TAG_PREFIX:-internal-}
+tag_prefix=${TAG_PREFIX}
+
 
 cd ${GITHUB_WORKSPACE}/${source}
+
+# Was the last merge a feature branch (check merge comment)
+# Will use previous default, if the comment is changed
+if [[ "$(git show -n1 --merges --oneline | grep -c '/feature/')" -ge 1 ]]; then
+    default_semvar_bump=minor
+fi
+echo "default_semvar_bump: ${default_semvar_bump}"
 
 pre_release="true"
 IFS=',' read -ra branch <<< "$release_branches"
@@ -25,6 +33,7 @@ for b in "${branch[@]}"; do
 done
 
 echo "pre_release = $pre_release"
+echo "branch = $branch"
 
 # fetch tags
 git fetch --tags
