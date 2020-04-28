@@ -10,9 +10,15 @@ dryrun=${DRY_RUN:-false}
 
 # KT - add tag_prefix
 tag_prefix=${TAG_PREFIX:-internal-}
-branch=${GITHUB_REF#'refs/heads/'}
 
-env 
+
+# Was the last merge a feature branch (check merge comment)
+# Will use previous default, if the comment is changed
+if [[ "$(git show -n1 --merges --oneline | grep -c '/feature/')" -ge 1 ]]; then
+    default_semvar_bump=minor
+fi
+echo "default_semvar_bump: ${default_semvar_bump}"
+
 
 if [ -z ${DEFAULT_BUMP} ]; then 
   # default bump based on branch name
