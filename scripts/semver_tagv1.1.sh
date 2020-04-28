@@ -10,7 +10,7 @@ default_semvar_bump=${DEFAULT_DUMP:-patch}
 
 
 # KT - add tag_prefix
-tag_prefix=${TAG_PREFIX:-internal-}
+tag_prefix=${TAG_PREFIX}
 
 
 cd ${GITHUB_WORKSPACE}/${source}
