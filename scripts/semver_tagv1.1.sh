@@ -12,6 +12,8 @@ dryrun=${DRY_RUN:-false}
 tag_prefix=${TAG_PREFIX:-internal-}
 
 
+cd ${GITHUB_WORKSPACE}/${source}
+
 # Was the last merge a feature branch (check merge comment)
 # Will use previous default, if the comment is changed
 if [[ "$(git show -n1 --merges --oneline | grep -c '/feature/')" -ge 1 ]]; then
@@ -29,7 +31,6 @@ else
   default_semvar_bump=${DEFAULT_BUMP:-minor}
 fi
 
-cd ${GITHUB_WORKSPACE}/${source}
 
 pre_release="true"
 IFS=',' read -ra branch <<< "$release_branches"
