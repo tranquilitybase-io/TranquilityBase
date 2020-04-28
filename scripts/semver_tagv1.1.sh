@@ -6,6 +6,7 @@ release_branches=${RELEASE_BRANCHES:-master}
 custom_tag=${CUSTOM_TAG}
 source=${SOURCE:-.}
 dryrun=${DRY_RUN:-false}
+default_semvar_bump=${DEFAULT_DUMP:-patch}
 
 
 # KT - add tag_prefix
