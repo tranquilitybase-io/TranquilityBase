@@ -3,7 +3,7 @@ version: '3.1'
 services:
   gcp-dac:
     container_name: gcp-dac
-    image: gcr.io/tranquility-base-images/tb-gcp-dac:alpha
+    image: gcr.io/tranquility-base-images/tb-gcp-dac:integration
     #    build:
     #      context: .
     #      dockerfile: Dockerfile
@@ -24,11 +24,11 @@ services:
       # replace <CREDENTIALS FILE> with the location of a Google service account's JSON credentials file - example below
       # - C:\dev\tb-gcp-dac\credentials.json:/credentials.json:ro
       #- <CREDENTIALS FILE>:/credentials.json
-      - ./credentials.json
+      - ./credentials.json:/credentials.json
       # replace <EC CONFIG FILE> with the location of the file - example below
       #      - C:\dev\tb-gcp-dac\ec-config.yaml:/app/ec-config.yaml:ro
       #- <EC CONFIG FILE>:/app/ec-config.yaml:ro
-      - ./ec-config.yaml:ro
+      - ./ec-config.yaml:/ec-config.yaml:ro
 
   redis:
     container_name: redis
@@ -38,13 +38,14 @@ services:
   #      - redis.conf:/redis.conf
   #    command: [ "redis-server", "/redis.conf" ]
 
-  gcp-dac-worker:
+  worker:
     container_name: gcp-dac-worker
-    image: gcr.io/tranquility-base-images/tb-gcp-dac:alpha
+    image: gcr.io/tranquility-base-images/tb-gcp-dac:integration
     #    build:
     #      context: .
     #      dockerfile: Dockerfile
-    command:  celery -E -A celery_worker worker --loglevel=info
+    hostname: worker
+    command: celery -E -A celery_worker worker --loglevel=info
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /credentials.json
       CELERY_BROKER_URL: redis://redis:6379
@@ -54,11 +55,11 @@ services:
       # replace <CREDENTIALS FILE> with the location of a Google service account's JSON credentials file - example below
       # - C:\dev\tb-gcp-dac\credentials.json:/credentials.json:ro
       #- <CREDENTIALS FILE>:/credentials.json
-      - ./credentials.json
+      - ./credentials.json:/credentials.json
       # replace <EC CONFIG FILE> with the location of the file - example below
       #      - C:\dev\tb-gcp-dac\ec-config.yaml:/app/ec-config.yaml:ro
       #- <EC CONFIG FILE>:/app/ec-config.yaml:ro
-      - ./ec-config.yaml:ro
+      - ./ec-config.yaml:/ec-config.yaml:ro
     links:
       - redis
     depends_on:
@@ -67,7 +68,7 @@ services:
 #    restart: always
 
   mysql57:
-    image: gcr.io/tranquility-base-images/tb-houston-mysql57:mock
+    image: gcr.io/tranquility-base-images/tb-houston-mysql57:integration
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -79,7 +80,7 @@ services:
     - '3306:3306'
 
   houston-service:
-    image: gcr.io/tranquility-base-images/tb-houston-service:mock
+    image: gcr.io/tranquility-base-images/tb-houston-service:integration
     restart: always
     environment:
         SQLALCHEMY_DATABASE_URI: 'mysql+mysqlconnector://eagle-user:eagle-user-secret-pw@mysql57/eagle_db'
@@ -92,7 +93,7 @@ services:
       - 3000:3000
 
   eagle-console:
-    image: gcr.io/tranquility-base-images/tb-eagle-console:alpha
+    image: gcr.io/tranquility-base-images/tb-eagle-console:integration
     restart: always
     environment:
       PROXY_TARGET: 'http://houston-service:3000'
