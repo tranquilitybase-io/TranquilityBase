@@ -19,7 +19,7 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: /credentials.json
       CELERY_BROKER_URL: redis://redis:6379
       CELERY_RESULT_BACKEND: redis://redis:6379
-      HOUSTON_SERVICE_URL: 'http://houston-service:3000'
+      HOUSTON_SERVICE_URL: 'houston-service:3000'
     volumes:
       # replace <CREDENTIALS FILE> with the location of a Google service account's JSON credentials file - example below
       # - C:\dev\tb-gcp-dac\credentials.json:/credentials.json:ro
@@ -28,7 +28,7 @@ services:
       # replace <EC CONFIG FILE> with the location of the file - example below
       #      - C:\dev\tb-gcp-dac\ec-config.yaml:/app/ec-config.yaml:ro
       #- <EC CONFIG FILE>:/app/ec-config.yaml:ro
-      - ./ec-config.yaml:/ec-config.yaml:ro
+      - ./ec-config.yaml:/app/ec-config.yaml:ro
 
   redis:
     container_name: redis
@@ -50,7 +50,7 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: /credentials.json
       CELERY_BROKER_URL: redis://redis:6379
       CELERY_RESULT_BACKEND: redis://redis:6379
-      HOUSTON_SERVICE_URL: 'http://houston-service:3000'
+      HOUSTON_SERVICE_URL: 'houston-service:3000'
     volumes:
       # replace <CREDENTIALS FILE> with the location of a Google service account's JSON credentials file - example below
       # - C:\dev\tb-gcp-dac\credentials.json:/credentials.json:ro
@@ -59,7 +59,7 @@ services:
       # replace <EC CONFIG FILE> with the location of the file - example below
       #      - C:\dev\tb-gcp-dac\ec-config.yaml:/app/ec-config.yaml:ro
       #- <EC CONFIG FILE>:/app/ec-config.yaml:ro
-      - ./ec-config.yaml:/ec-config.yaml:ro
+      - ./ec-config.yaml:/app/ec-config.yaml:ro
     links:
       - redis
     depends_on:
@@ -86,7 +86,7 @@ services:
         SQLALCHEMY_DATABASE_URI: 'mysql+mysqlconnector://eagle-user:eagle-user-secret-pw@mysql57/eagle_db'
         SQLALCHEMY_ECHO: 'False'
         SQLALCHEMY_TRACK_MODIFICATIONS: 'False'
-        GCP_DAC_URL: 'http://gcp-dac:3100'
+        GCP_DAC_URL: 'gcp-dac:3100'
     depends_on:
         - mysql57
     ports:

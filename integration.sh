@@ -57,4 +57,4 @@ if [ "$1" == "run" ]; then
 fi
 
 echo "Invalid or no arguement found!"
-echo "Usage: $0 build | run | deploy | pull | down | ps | kill"
+echo "Usage: $0 run | pull | down | ps | kill"
