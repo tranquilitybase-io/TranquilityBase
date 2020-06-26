@@ -3,6 +3,7 @@ version: '3.1'
 services:
   gcp-dac:
     container_name: gcp-dac
+    #image: gcr.io/tranquility-base-images/tb-gcp-dac:mock
     image: gcr.io/tranquility-base-images/tb-gcp-dac:mock
     #    build:
     #      context: .
@@ -13,7 +14,7 @@ services:
       - 3100:3100
 
   mysql57:
-    image: gcr.io/tranquility-base-images/tb-houston-mysql57:mock
+    image: gcr.io/tranquility-base-images/tb-db:landingzone
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -25,7 +26,7 @@ services:
     - '3306:3306'
 
   houston-service:
-    image: gcr.io/tranquility-base-images/tb-houston-service:mock
+    image: gcr.io/tranquility-base-images/tb-houston-service:landingzone
     restart: always
     environment:
         SQLALCHEMY_DATABASE_URI: 'mysql+mysqlconnector://eagle-user:eagle-user-secret-pw@mysql57/eagle_db'
@@ -39,7 +40,7 @@ services:
       - 3000:3000
 
   eagle-console:
-    image: gcr.io/tranquility-base-images/tb-eagle-console:dev
+    image: gcr.io/tranquility-base-images/tb-eagle-console:landingzone
     restart: always
     environment:
       PROXY_TARGET: 'http://houston-service:3000'

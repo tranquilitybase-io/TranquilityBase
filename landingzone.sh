@@ -5,35 +5,35 @@ ROOTDIR=$(pwd)
 rm -f nohup.out
 
 if [ "$1" == "pull" ]; then
-  docker-compose -f docker-compose-integration.yml pull
+  docker-compose -f docker-compose-landingzone.yml pull
   exit 0
 fi
 
 if [ "$1" == "down" ]; then
-  docker-compose -f docker-compose-integration.yml down
+  docker-compose -f docker-compose-landingzone.yml down
   exit 0
 fi
 
 if [ "$1" == "kill" ]; then
-  docker-compose -f docker-compose-integration.yml kill
+  docker-compose -f docker-compose-landingzone.yml kill
   exit 0
 fi
 
 if [ "$1" == "ps" ]; then
-  docker-compose -f docker-compose-integration.yml ps
+  docker-compose -f docker-compose-landingzone.yml ps
   exit 0
 fi
 
 if [ "$1" == "run" ]; then
-  nohup docker-compose -f docker-compose-integration.yml up 2>&1 &
+  nohup docker-compose -f docker-compose-landingzone.yml up 2>&1 &
 
   # Wait for system to be fully up
   start_epoch="$(date -u +%s)"
   elapsed_seconds=0
-  until [ $(docker-compose -f docker-compose-integration.yml ps | grep Up | wc -l) -eq 6 ] || [ $elapsed_seconds -ge 600 ]
+  until [ $(docker-compose -f docker-compose-landingzone.yml ps | grep Up | wc -l) -eq 6 ] || [ $elapsed_seconds -ge 600 ]
   do
     sleep 30
-    docker-compose -f docker-compose-integration.yml ps
+    docker-compose -f docker-compose-landingzone.yml ps
     current_epoch="$(date -u +%s)"
     elapsed_seconds="$(($current_epoch-$start_epoch))"
     echo "Elapsed seconds: ${elapsed_seconds}"
@@ -45,7 +45,7 @@ if [ "$1" == "run" ]; then
     echo "Type 'exit' to shutdown? "
     read input
   done
-  docker-compose -f docker-compose-integration.yml down
+  docker-compose -f docker-compose-landingzone.yml down
   exit 0
 fi
 
