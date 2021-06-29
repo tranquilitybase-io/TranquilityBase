@@ -1,0 +1,27 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+template: |
+  # What's Changed
+  $CHANGES
+categories:
+  - title: 'Breaking'
+    label: 'type: breaking'
+  - title: 'Epic'
+    label: 'type: epic'
+  - title: 'Documentation'
+    label: 'type: docs'
+
+version-resolver:
+  major:
+    labels:
+      - 'type: breaking'
+  minor:
+    labels:
+      - 'type: epic'
+  patch:
+    labels:
+      - 'type: docs'
+  default: patch
+
+exclude-labels:
+  - 'skip-changelog'
